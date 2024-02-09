@@ -24,7 +24,7 @@ type OpenMeteoForecast struct {
 		Temp_2m  string `json:"temperature_2m"`
 	} `json:"current_units"`
 	Current struct {
-		Time     cTime  `json:"time"` // date?
+		Time     cTime   `json:"time"` // date?
 		Interval int     `json:"interval"`
 		Temp_2m  float32 `json:"temperature_2m"`
 	} `json:"current"`
