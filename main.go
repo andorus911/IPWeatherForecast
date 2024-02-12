@@ -11,22 +11,22 @@ import (
 )
 
 type OpenMeteoForecast struct {
-	Latitude           float32 `json:"latitude"`
-	Longitude          float32 `json:"longitude"`
-	GenerationTime_ms  float32 `json:"generationtime_ms"`
-	UTC_Offset_Seconds int     `json:"utc_offset_seconds"`
-	TimeZone           string  `json:"timezone"`
-	TimeZoneAbbr       string  `json:"timezone_abbreviation"`
-	Elevation          float32 `json:"elevation"`
-	CurrentUnits       struct {
-		Time     string `json:"time"`
-		Interval string `json:"interval"`
-		Temp_2m  string `json:"temperature_2m"`
+	Latitude             float64 `json:"latitude"`
+	Longitude            float64 `json:"longitude"`
+	GenerationtimeMs     float64 `json:"generationtime_ms"`
+	UtcOffsetSeconds     int     `json:"utc_offset_seconds"`
+	Timezone             string  `json:"timezone"`
+	TimezoneAbbreviation string  `json:"timezone_abbreviation"`
+	Elevation            float64 `json:"elevation"`
+	CurrentUnits         struct {
+		Time          string `json:"time"`
+		Interval      string `json:"interval"`
+		Temperature2M string `json:"temperature_2m"`
 	} `json:"current_units"`
 	Current struct {
-		Time     cTime   `json:"time"` // date?
-		Interval int     `json:"interval"`
-		Temp_2m  float32 `json:"temperature_2m"`
+		Time          cTime  `json:"time"`
+		Interval      int     `json:"interval"`
+		Temperature2M float64 `json:"temperature_2m"`
 	} `json:"current"`
 }
 
