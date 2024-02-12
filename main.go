@@ -24,21 +24,54 @@ type OpenMeteoForecast struct {
 		Temperature2M string `json:"temperature_2m"`
 	} `json:"current_units"`
 	Current struct {
-		Time          cTime  `json:"time"`
+		Time          cTime   `json:"time"`
 		Interval      int     `json:"interval"`
 		Temperature2M float64 `json:"temperature_2m"`
 	} `json:"current"`
 }
 
+type Coordinates struct {
+	lat float64
+	lon float64
+}
+
 func main() {
-	// get weather forecast via coords
+	// primitive cli for now
+	for {
+		var choice int
+
+		fmt.Printf("Choose an option:\n1. Get forecast\n2. Exit\n")
+		fmt.Scanf("%d", &choice)
+
+		switch choice {
+		case 1:
+			// to add location determinator
+			fmt.Printf("Enter coordinates (lat, lon): ")
+			var c Coordinates
+			fmt.Scanf("%f %f", &c.lat, &c.lon)
+			getOpenMeteoForecast(c)
+		case 2:
+			return
+		default:
+			fmt.Println("Incorrect option!")
+		}
+	}
+}
+
+// get weather forecast via coords
+func getOpenMeteoForecast(c Coordinates) {
 	tr := &http.Transport{
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
 	}
+
 	client := &http.Client{Transport: tr}
-	resp, err := client.Get("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m&start_date=2024-02-07&end_date=2024-02-07")
+
+	ts := time.Now().Format("2006-01-02")
+	url := fmt.Sprintf("https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current=temperature_2m&start_date=%s&end_date=%s", c.lat, c.lon, ts, ts)
+
+	resp, err := client.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
